@@ -2,12 +2,11 @@
 {
     internal class Program
     {
+        
         static void Main(string[] args)
         {
-            Process1();
-            Process2();
-            Process3();
-            BMI();
+            Week2 week2 = new Week2();
+            week2.NumberBaseBall();
         }
         public static void Process1()
         {

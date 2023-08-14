@@ -6,7 +6,7 @@
         static void Main(string[] args)
         {
             Week2 week2 = new Week2();
-            week2.NumberBaseBall();
+            week2.TicTacToe();
         }
         public static void Process1()
         {

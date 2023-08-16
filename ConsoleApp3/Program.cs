@@ -120,7 +120,7 @@
         }
     }
 
-    public class Position
+    public struct Position
     {
         public int x;
         public int y;
@@ -147,7 +147,7 @@
             add.y = Head.y;
 
             Body.Enqueue(add);
-            MoveHead();
+            Head = MoveHead(Head);
         }
         public void Shorten(int length)
         {
@@ -157,7 +157,7 @@
                 Console.SetCursorPosition(dummy.x * 2, dummy.y);
                 Console.Write('\u00B7');
             }
-            MoveHead();
+            Head = MoveHead(Head);
         }
         public void Move()
         {
@@ -165,25 +165,26 @@
             dummy = Body.Dequeue();
             Console.SetCursorPosition(dummy.x * 2, dummy.y);
             Console.Write('\u00B7');
-            MoveHead();
+            Head = MoveHead(Head);
         }
-        public void MoveHead()
+        public Position MoveHead(Position head)
         {
             switch (direction)
             {
                 case DIRECTION.Left:
-                    Head.x -= 1;
+                    head.x -= 1;
                     break;
                 case DIRECTION.Right:
-                    Head.x += 1;
+                    head.x += 1;
                     break;
                 case DIRECTION.Up:
-                    Head.y -= 1;
+                    head.y -= 1;
                     break;
                 case DIRECTION.Down:
-                    Head.y += 1;
+                    head.y += 1;
                     break;
             }
+            return head;
         }
 
         public void BodyMove()

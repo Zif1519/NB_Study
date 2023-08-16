@@ -55,6 +55,7 @@
 
                 if (Snake.Head.x == food.x && Snake.Head.y == food.y)
                 {
+                    isFoodOn = false;
                     foodCount++;
                     food.x = -1;
                     food.y = -1;
@@ -69,10 +70,17 @@
                     Snake.Move();
                 }
                 
+                if (Snake.Body.Any(item => item.x == Snake.Head.x && item.y == Snake.Head.y))
+                {
+                    break;
+                }
+                if (Snake.Head.x > 15 ||  Snake.Head.x < 0 || Snake.Head.y > 15 || Snake.Head.y < 0)
+                {
+                    break;
+                }
             }
-                
-            
-            
+            Console.SetCursorPosition(0, 15);
+            Console.WriteLine("\n\n\n 게임이 종료되었습니다. \n\n\n");
         }
         public static void DrawMap(int width, int height)
         {

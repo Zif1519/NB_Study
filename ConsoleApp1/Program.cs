@@ -5,8 +5,16 @@
         
         static void Main(string[] args)
         {
-            Week2 week2 = new Week2();
-            week2.TicTacToe();
+            //Week2 week2 = new Week2();
+            //week2.TicTacToe();
+
+            //Person p = new Person();
+            //p.Name = "John";
+            //p.Age = 30;
+            //p.PrintInfo(); // 출력: Name: John, Age: 30
+
+           // Week3.BlackJack();
+
         }
         public static void Process1()
         {

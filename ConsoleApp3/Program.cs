@@ -142,7 +142,11 @@
 
         public void Lengthen()
         {
-            Body.Enqueue(Head);
+            Position add = new Position(0,0);
+            add.x = Head.x;
+            add.y = Head.y;
+
+            Body.Enqueue(add);
             MoveHead();
         }
         public void Shorten(int length)
@@ -180,6 +184,11 @@
                     Head.y += 1;
                     break;
             }
+        }
+
+        public void BodyMove()
+        {
+
         }
     }
 

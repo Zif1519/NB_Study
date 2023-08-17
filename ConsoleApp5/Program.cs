@@ -4,8 +4,8 @@
     {
         static void Main(string[] args)
         {
-            //NumberBaseBall();
-            TicTacToe();
+            NumberBaseBall();
+            //TicTacToe();
         }
 
         public static void NumberBaseBall()
@@ -47,11 +47,25 @@
             {
                 tryCount++;
                 Console.Write($"{tryCount} try, New Guess numbers : ");
-                string answer = Console.ReadLine();
-                guessNumbers[0] = int.Parse(answer.Split(',')[0]);
-                guessNumbers[1] = int.Parse(answer.Split(',')[1]);
-                guessNumbers[2] = int.Parse(answer.Split(',')[2]);
 
+                bool inputSuccess = false;
+                while (!inputSuccess)
+                {
+                    try
+                    {
+                        string answer = Console.ReadLine();
+                        guessNumbers[0] = int.Parse(answer.Split(',')[0]);
+                        guessNumbers[1] = int.Parse(answer.Split(',')[1]);
+                        guessNumbers[2] = int.Parse(answer.Split(',')[2]);
+                        if (guessNumbers[0] < 0 || guessNumbers[1] < 0 || guessNumbers[2] < 0) { throw new Exception("Invalid input range."); }
+                        if (guessNumbers[0] > 9 || guessNumbers[1] > 9 || guessNumbers[2] > 9) { throw new Exception("Invalid input range."); }
+                        inputSuccess = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"입력 형식이 맞지 않습니다. 다시 입력을 해주세요. Exception : {ex.Message}");
+                    }
+                }
                 int strikeCount = 0;
                 int ballCount = 0;
                 for (int i = 0; i < 3; i++)
@@ -88,7 +102,7 @@
                 Console.WriteLine("\n\n\n게임 설명을 생략합니다.\n\n\n");
             }
 
-            int[,] gameStatus = new int[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
+            int[,] board = new int[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
             bool isOver = false;
             bool isDraw = false;
             int playerNumber = 2;
@@ -100,12 +114,30 @@
                 if (playerNumber == 1) Console.Write("플레이어1의 차례입니다. 원하시는 좌표를 입력하세요 \"x,y\" (x,y는 1~3 사이의 숫자) : ");
                 if (playerNumber == 2) Console.Write("플레이어2의 차례입니다. 원하시는 좌표를 입력하세요 \"x,y\" (x,y는 1~3 사이의 숫자) : ");
 
-                string[] answer = Console.ReadLine().Split(',');
+                bool inputSuccess = false;
+                int x = 0;
+                int y = 0;
 
-
-                if (gameStatus[int.Parse(answer[0]) - 1, int.Parse(answer[1]) - 1] == 0)
+                while (!inputSuccess)
                 {
-                    gameStatus[int.Parse(answer[0]) - 1, int.Parse(answer[1]) - 1] = playerNumber;
+                    try
+                    {
+                        string[] answer = Console.ReadLine().Split(',');
+                        x = int.Parse(answer[0]);
+                        y = int.Parse(answer[1]);
+                        if (x < 0 || x > 3 || y < 0 || y > 3) { throw new Exception("Invalid input range."); }
+                        inputSuccess = true; // 입력이 성공적으로 이루어지면 루프를 종료합니다.
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"입력 형식이 맞지 않습니다. 다시 입력을 해주세요. Exception : {ex.Message}");
+                    }
+                }
+
+
+                if (board[x - 1, y - 1] == 0)
+                {
+                    board[x - 1, y - 1] = playerNumber;
                 }
                 else
                 {
@@ -114,15 +146,15 @@
                     continue;
                 }
 
-                ShowGameStatus(gameStatus);
-                isOver = IsGameOver(gameStatus);
-                isDraw = IsDrawGame(gameStatus);
+                ShowBoard(board);
+                isOver = IsGameOver(board);
+                isDraw = IsDrawGame(board);
             }
             if (isDraw) Console.WriteLine("\n\n무승부 입니다.\n\n");
             if (isOver) Console.WriteLine($"\n\n{playerNumber}플레이어가 승리하였습니다.\n\n");
         }
 
-        public static void ShowGameStatus(int[,] status)
+        public static void ShowBoard(int[,] status)
         {
             for (int i = 0; i < 3; i++)
             {
